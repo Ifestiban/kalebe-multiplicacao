@@ -1,0 +1,3032 @@
+/* ==========================================================
+   KALEBE — AVENTURA DA MULTIPLICAÇÃO
+   PREMIUM GAME UI
+   ========================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&display=swap');
+
+
+/* ==========================================================
+   RESET / VARIÁVEIS
+   ========================================================== */
+
+:root {
+    --blue: #1677ff;
+    --blue-dark: #0751b5;
+    --blue-deep: #06377e;
+
+    --yellow: #ffd83d;
+    --yellow-dark: #e4a900;
+
+    --green: #45d65b;
+    --green-dark: #169b37;
+
+    --red: #ff5353;
+
+    --white: #ffffff;
+    --text: #17335c;
+
+    --shadow:
+        0 12px 30px rgba(0, 50, 120, .25);
+
+    --shadow-button:
+        0 8px 0 rgba(0, 0, 0, .18);
+}
+
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+
+    font-family: "Baloo 2", Arial, sans-serif;
+}
+
+
+body {
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,255,255,.30),
+            transparent 25%
+        ),
+        linear-gradient(
+            160deg,
+            #54d7ff 0%,
+            #168cff 45%,
+            #0753c7 100%
+        );
+}
+
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+button:focus-visible {
+    outline: 5px solid rgba(255, 216, 61, .8);
+    outline-offset: 4px;
+}
+
+
+.game {
+    min-height: 100vh;
+}
+
+
+
+/* ==========================================================
+   TELAS
+   ========================================================== */
+
+.screen {
+    display: none;
+
+    min-height: 100vh;
+
+    padding: 30px;
+
+    text-align: center;
+}
+
+
+.screen.active {
+    display: block;
+
+    animation:
+        screenEnter .55s
+        cubic-bezier(.2,.9,.3,1);
+}
+
+
+@keyframes screenEnter {
+
+    from {
+        opacity: 0;
+        transform: scale(.96) translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+
+}
+
+
+
+/* ==========================================================
+   HOME
+   ========================================================== */
+
+#home {
+    position: relative;
+
+    overflow: hidden;
+
+    padding-top: 5vh;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(255,255,255,.25),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #4ed6ff 0%,
+            #168cff 48%,
+            #0753c7 100%
+        );
+}
+
+
+/* NUVENS / DECORAÇÃO */
+
+#home::before {
+
+    content: "☁️     ☁️           ☁️";
+
+    position: absolute;
+
+    top: 8%;
+    left: -10%;
+
+    width: 120%;
+
+    font-size: 65px;
+
+    opacity: .45;
+
+    animation:
+        clouds 20s linear infinite;
+
+    pointer-events: none;
+}
+
+
+@keyframes clouds {
+
+    from {
+        transform: translateX(-5%);
+    }
+
+    to {
+        transform: translateX(10%);
+    }
+
+}
+
+
+/* ESTRELAS */
+
+#home::after {
+
+    content: "✦   ✧      ✦     ✧        ✦";
+
+    position: absolute;
+
+    bottom: 8%;
+    left: 0;
+
+    width: 100%;
+
+    font-size: 40px;
+
+    color: rgba(255,255,255,.4);
+
+    animation:
+        starsFloat 4s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+
+@keyframes starsFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+}
+
+
+
+/* LOGO */
+
+.logo {
+    position: relative;
+
+    z-index: 2;
+
+    display: inline-block;
+
+    font-size: clamp(75px, 10vw, 115px);
+
+    filter:
+        drop-shadow(
+            0 10px 5px rgba(0,0,0,.20)
+        );
+
+    animation:
+        logoFloat 2.8s ease-in-out infinite;
+}
+
+
+@keyframes logoFloat {
+
+    0%,
+    100% {
+        transform: translateY(0)
+                   rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-14px)
+                   rotate(3deg);
+    }
+
+}
+
+
+
+#home h1 {
+
+    position: relative;
+    z-index: 2;
+
+    margin: -5px 0 0;
+
+    font-size:
+        clamp(55px, 9vw, 95px);
+
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: 4px;
+
+    color: white;
+
+    text-shadow:
+        0 5px 0 #0754b5,
+        0 9px 0 #063a83,
+        0 15px 20px rgba(0,0,0,.30);
+
+    animation:
+        titleEnter .8s
+        cubic-bezier(.2,1.4,.4,1);
+}
+
+
+@keyframes titleEnter {
+
+    from {
+        opacity: 0;
+        transform: scale(.4);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+
+
+#home h2 {
+
+    position: relative;
+    z-index: 2;
+
+    margin: 12px 0;
+
+    font-size:
+        clamp(23px, 4vw, 34px);
+
+    color: #fff4a8;
+
+    text-shadow:
+        0 3px 5px rgba(0,0,0,.25);
+}
+
+
+
+.welcome {
+
+    position: relative;
+    z-index: 2;
+
+    width: min(550px, 92%);
+
+    margin: 30px auto;
+
+    padding: 17px 25px;
+
+    font-size:
+        clamp(20px, 3vw, 27px);
+
+    font-weight: 600;
+
+    line-height: 1.35;
+
+    background:
+        rgba(255,255,255,.16);
+
+    border:
+        2px solid rgba(255,255,255,.30);
+
+    border-radius: 25px;
+
+    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.10);
+}
+
+
+
+/* ==========================================================
+   BOTÕES PREMIUM
+   ========================================================== */
+
+.main-button,
+.secondary-button {
+
+    position: relative;
+    z-index: 3;
+
+    display: block;
+
+    width: min(420px, 90%);
+
+    margin: 18px auto;
+
+    padding: 18px 25px;
+
+    border: 0;
+
+    border-radius: 22px;
+
+    font-size:
+        clamp(20px, 3vw, 28px);
+
+    font-weight: 800;
+
+    letter-spacing: .5px;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        filter .2s ease;
+}
+
+
+
+.main-button {
+
+    color: #694300;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff271 0%,
+            #ffd62f 55%,
+            #ffc400 100%
+        );
+
+    border:
+        3px solid rgba(255,255,255,.45);
+
+    box-shadow:
+        0 8px 0 #d89c00,
+        0 15px 25px rgba(0,0,0,.20);
+
+    animation:
+        playPulse 2s ease-in-out infinite;
+}
+
+
+@keyframes playPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.035);
+    }
+
+}
+
+
+
+.secondary-button {
+
+    color: #1261bd;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #e8f5ff
+        );
+
+    border:
+        3px solid rgba(255,255,255,.60);
+
+    box-shadow:
+        0 7px 0 #a9d5ee,
+        0 13px 25px rgba(0,0,0,.15);
+}
+
+
+
+.main-button:hover,
+.secondary-button:hover {
+
+    transform:
+        translateY(-4px)
+        scale(1.025);
+
+    filter: brightness(1.04);
+}
+
+
+
+.main-button:active,
+.secondary-button:active {
+
+    transform: translateY(5px);
+
+    box-shadow:
+        0 3px 0 rgba(0,0,0,.20);
+}
+
+
+
+/* ==========================================================
+   MAPA
+   ========================================================== */
+
+#map {
+
+    position: relative;
+
+    overflow: hidden;
+
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,255,255,.9),
+            transparent 18%
+        ),
+        linear-gradient(
+            180deg,
+            #c9f4ff 0%,
+            #dfffe3 100%
+        );
+}
+
+
+
+#map::before {
+
+    content: "☁️        ☁️               ☁️";
+
+    position: absolute;
+
+    top: 30px;
+    left: 0;
+
+    width: 100%;
+
+    font-size: 55px;
+
+    opacity: .55;
+
+    animation:
+        mapClouds 15s ease-in-out infinite alternate;
+
+    pointer-events: none;
+}
+
+
+@keyframes mapClouds {
+
+    from {
+        transform: translateX(-30px);
+    }
+
+    to {
+        transform: translateX(30px);
+    }
+
+}
+
+
+
+#map h1 {
+
+    position: relative;
+    z-index: 2;
+
+    margin-bottom: 5px;
+
+    font-size:
+        clamp(32px, 6vw, 52px);
+
+    color: #0b5bb8;
+
+    text-shadow:
+        0 3px 0 white;
+}
+
+
+
+.map-description {
+
+    position: relative;
+    z-index: 2;
+
+    margin-top: 5px;
+
+    font-size: 23px;
+
+    font-weight: 600;
+}
+
+
+
+.worlds {
+
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    flex-wrap: wrap;
+
+    gap: 30px;
+
+    width: min(1100px, 100%);
+
+    margin: 35px auto;
+}
+
+
+
+/* ==========================================================
+   CARDS DOS MUNDOS
+   ========================================================== */
+
+.world {
+
+    position: relative;
+
+    width: 230px;
+    min-height: 250px;
+
+    padding: 24px 18px;
+
+    overflow: hidden;
+
+    border:
+        4px solid rgba(255,255,255,.8);
+
+    border-radius: 32px;
+
+    color: var(--text);
+
+    box-shadow:
+        0 9px 0 rgba(0,80,130,.18),
+        0 17px 30px rgba(0,70,120,.18);
+
+    transition:
+        transform .25s
+        cubic-bezier(.2,.8,.3,1.4),
+        box-shadow .25s ease;
+
+    animation:
+        worldEnter .6s backwards;
+}
+
+
+.world:nth-child(1) {
+    animation-delay: .05s;
+}
+
+.world:nth-child(2) {
+    animation-delay: .12s;
+}
+
+.world:nth-child(3) {
+    animation-delay: .19s;
+}
+
+.world:nth-child(4) {
+    animation-delay: .26s;
+}
+
+.world:nth-child(5) {
+    animation-delay: .33s;
+}
+
+
+@keyframes worldEnter {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(40px)
+            scale(.85);
+    }
+
+}
+
+
+
+.world::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -80px;
+    left: -80px;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.28);
+}
+
+
+
+.world.unlocked {
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #eaffff
+        );
+}
+
+
+
+.world.unlocked:hover {
+
+    transform:
+        translateY(-12px)
+        scale(1.055)
+        rotate(-1deg);
+
+    box-shadow:
+        0 14px 0 rgba(0,80,130,.16),
+        0 25px 40px rgba(0,70,120,.25);
+}
+
+
+
+.world.unlocked:active {
+
+    transform:
+        translateY(3px)
+        scale(.98);
+}
+
+
+
+.world span {
+
+    position: relative;
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 75px;
+
+    filter:
+        drop-shadow(
+            0 8px 4px rgba(0,0,0,.15)
+        );
+
+    transition:
+        transform .3s ease;
+}
+
+
+
+.world.unlocked:hover span {
+
+    transform:
+        translateY(-8px)
+        scale(1.15)
+        rotate(4deg);
+}
+
+
+
+.world strong {
+
+    position: relative;
+
+    display: block;
+
+    margin: 5px;
+
+    font-size: 28px;
+
+    font-weight: 800;
+
+    color: #105aaa;
+}
+
+
+
+.world small {
+
+    position: relative;
+
+    display: block;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    color: #52708f;
+}
+
+
+
+.world-stars {
+
+    position: relative;
+
+    margin-top: 15px;
+
+    font-size: 27px;
+
+    filter:
+        drop-shadow(
+            0 3px 2px rgba(0,0,0,.15)
+        );
+}
+
+
+
+/* BLOQUEADO */
+
+.world.locked {
+
+    cursor: not-allowed;
+
+    color: #71808e;
+
+    background:
+        linear-gradient(
+            145deg,
+            #dce4e8,
+            #bdc8cf
+        );
+
+    filter: grayscale(.5);
+
+    opacity: .75;
+}
+
+
+
+.world.locked span {
+
+    filter: grayscale(1);
+}
+
+
+
+/* ==========================================================
+   BATALHA
+   ========================================================== */
+
+#battle {
+
+    position: relative;
+
+    overflow: hidden;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(255,255,255,.20),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #78e35e 0%,
+            #32c64f 50%,
+            #0a913c 100%
+        );
+}
+
+
+
+/* CHÃO */
+
+#battle::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: -10%;
+    bottom: -80px;
+
+    width: 120%;
+    height: 190px;
+
+    background:
+        linear-gradient(
+            #35a941,
+            #177e31
+        );
+
+    border-radius: 50% 50% 0 0;
+
+    box-shadow:
+        inset 0 15px
+        rgba(255,255,255,.12);
+
+    z-index: 0;
+}
+
+
+
+.battle-header,
+.battle-area {
+
+    position: relative;
+    z-index: 2;
+}
+
+
+
+.battle-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    width: min(800px, 100%);
+
+    margin: 0 auto;
+
+    padding: 10px 15px;
+
+    border:
+        2px solid rgba(255,255,255,.25);
+
+    border-radius: 22px;
+
+    background:
+        rgba(0,70,30,.18);
+
+    backdrop-filter: blur(8px);
+
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.12);
+
+    font-size: 25px;
+}
+
+
+
+.battle-header button {
+
+    border: 0;
+
+    padding: 9px 17px;
+
+    border-radius: 14px;
+
+    background: white;
+
+    box-shadow:
+        0 5px 0 rgba(0,0,0,.15);
+
+    font-size: 20px;
+
+    transition: .15s;
+}
+
+
+
+.battle-header button:active {
+
+    transform: translateY(4px);
+
+    box-shadow:
+        0 1px 0 rgba(0,0,0,.15);
+}
+
+
+
+.score-display,
+.coin-display {
+
+    min-width: 100px;
+
+    padding: 5px 12px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.15);
+
+    font-weight: 800;
+}
+
+
+
+.battle-area {
+
+    width: min(800px, 100%);
+
+    margin: 15px auto 0;
+}
+
+
+
+/* ==========================================================
+   FASE / PROGRESSO
+   ========================================================== */
+
+.level-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    width: min(600px, 95%);
+
+    margin: 14px auto 8px;
+
+    padding: 7px 15px;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    text-shadow:
+        0 2px 3px rgba(0,0,0,.20);
+}
+
+
+
+.progress-container {
+
+    position: relative;
+
+    width: min(600px, 90%);
+    height: 24px;
+
+    margin: 8px auto 12px;
+
+    overflow: hidden;
+
+    padding: 4px;
+
+    border:
+        2px solid rgba(255,255,255,.7);
+
+    border-radius: 30px;
+
+    background:
+        rgba(0,80,30,.25);
+
+    box-shadow:
+        inset 0 3px 5px rgba(0,0,0,.15);
+}
+
+
+
+#progress-bar {
+
+    position: relative;
+
+    width: 0%;
+    height: 100%;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffe14c,
+            #ffb900
+        );
+
+    box-shadow:
+        0 0 12px rgba(255,221,0,.6);
+
+    transition:
+        width .5s
+        cubic-bezier(.2,.8,.3,1);
+}
+
+
+
+#progress-bar::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -50%;
+
+    width: 50%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.7),
+            transparent
+        );
+
+    animation:
+        progressShine 2s linear infinite;
+}
+
+
+@keyframes progressShine {
+
+    to {
+        left: 120%;
+    }
+
+}
+
+
+
+/* ==========================================================
+   VIDAS
+   ========================================================== */
+
+.lives {
+
+    margin: 8px;
+
+    font-size: 31px;
+
+    letter-spacing: 5px;
+
+    filter:
+        drop-shadow(
+            0 4px 2px rgba(0,0,0,.20)
+        );
+
+    animation:
+        hearts 2s ease-in-out infinite;
+}
+
+
+@keyframes hearts {
+
+    50% {
+        transform: scale(1.05);
+    }
+
+}
+
+
+
+/* ==========================================================
+   MONSTRO
+   ========================================================== */
+
+.monster {
+
+    display: inline-block;
+
+    margin-top: 3px;
+
+    font-size:
+        clamp(80px, 13vw, 120px);
+
+    filter:
+        drop-shadow(
+            0 13px 5px rgba(0,0,0,.25)
+        );
+
+    transform-origin: bottom center;
+
+    animation:
+        monsterIdle 1.7s
+        ease-in-out infinite;
+}
+
+
+@keyframes monsterIdle {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(-3deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-12px)
+            rotate(3deg);
+
+    }
+
+}
+
+
+
+.mission {
+
+    margin: 2px 0 10px;
+
+    font-size:
+        clamp(18px, 3vw, 23px);
+
+    font-weight: 700;
+
+    text-shadow:
+        0 3px 3px rgba(0,0,0,.22);
+}
+
+
+
+/* ==========================================================
+   PERGUNTA
+   ========================================================== */
+
+.question {
+
+    position: relative;
+
+    width: fit-content;
+
+    min-width: 280px;
+
+    margin: 12px auto 20px;
+
+    padding: 12px 45px;
+
+    border:
+        4px solid rgba(255,255,255,.85);
+
+    border-radius: 28px;
+
+    color: #16427a;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #eaf8ff
+        );
+
+    box-shadow:
+        0 9px 0 #b7dbe9,
+        0 17px 30px rgba(0,0,0,.20);
+
+    font-size:
+        clamp(50px, 8vw, 75px);
+
+    line-height: 1.05;
+
+    font-weight: 800;
+
+    text-shadow:
+        0 2px 0 white;
+
+    animation:
+        questionAppear .45s
+        cubic-bezier(.2,1.4,.4,1);
+}
+
+
+@keyframes questionAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(15px)
+            scale(.7);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   RESPOSTAS
+   ========================================================== */
+
+.answers {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(130px, 210px));
+
+    justify-content: center;
+
+    gap: 17px;
+}
+
+
+
+.answer {
+
+    position: relative;
+
+    min-height: 75px;
+
+    padding: 12px 20px;
+
+    border:
+        3px solid rgba(255,255,255,.75);
+
+    border-radius: 22px;
+
+    color: #16427a;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #eaf6ff
+        );
+
+    box-shadow:
+        0 7px 0 #b4d5e6,
+        0 12px 20px rgba(0,0,0,.16);
+
+    font-size:
+        clamp(28px, 5vw, 38px);
+
+    font-weight: 800;
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        filter .15s ease;
+
+    animation:
+        answerEnter .4s backwards;
+}
+
+
+
+.answer:nth-child(1) {
+    animation-delay: .05s;
+}
+
+.answer:nth-child(2) {
+    animation-delay: .10s;
+}
+
+.answer:nth-child(3) {
+    animation-delay: .15s;
+}
+
+.answer:nth-child(4) {
+    animation-delay: .20s;
+}
+
+
+@keyframes answerEnter {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.7)
+            translateY(20px);
+
+    }
+
+}
+
+
+
+.answer:hover {
+
+    transform:
+        translateY(-5px)
+        scale(1.04);
+
+    filter: brightness(1.04);
+
+    box-shadow:
+        0 10px 0 #a7cbdf,
+        0 18px 25px rgba(0,0,0,.20);
+}
+
+
+
+.answer:active {
+
+    transform: translateY(5px);
+
+    box-shadow:
+        0 2px 0 #a7cbdf;
+}
+
+
+
+/* ==========================================================
+   ACERTO
+   ========================================================== */
+
+.answer.correct {
+
+    color: white;
+
+    border-color: #9cffaa;
+
+    background:
+        linear-gradient(
+            180deg,
+            #62e978,
+            #23b944
+        );
+
+    box-shadow:
+        0 7px 0 #087c28,
+        0 0 30px rgba(73,255,100,.75);
+
+    animation:
+        correctAnswer .55s ease;
+}
+
+
+@keyframes correctAnswer {
+
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform:
+            scale(1.18)
+            rotate(3deg);
+    }
+
+    70% {
+        transform:
+            scale(.96)
+            rotate(-2deg);
+    }
+
+    100% {
+        transform: scale(1.05);
+    }
+
+}
+
+
+
+/* ==========================================================
+   ERRO
+   ========================================================== */
+
+.answer.wrong {
+
+    color: white;
+
+    border-color: #ffabab;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ff6868,
+            #dc3030
+        );
+
+    box-shadow:
+        0 7px 0 #991c1c;
+
+    animation:
+        wrongAnswer .45s ease;
+}
+
+
+@keyframes wrongAnswer {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-12px);
+    }
+
+    40% {
+        transform: translateX(12px);
+    }
+
+    60% {
+        transform: translateX(-8px);
+    }
+
+    80% {
+        transform: translateX(8px);
+    }
+
+}
+
+
+
+/* ==========================================================
+   FEEDBACK
+   ========================================================== */
+
+.feedback {
+
+    min-height: 45px;
+
+    margin-top: 16px;
+
+    font-size:
+        clamp(21px, 3vw, 29px);
+
+    font-weight: 800;
+
+    color: white;
+
+    text-shadow:
+        0 3px 3px rgba(0,0,0,.25);
+}
+
+
+
+/* ==========================================================
+   FASE CONCLUÍDA
+   ========================================================== */
+
+.level-complete {
+
+    position: relative;
+
+    width: min(540px, 95%);
+
+    margin: 20px auto;
+
+    padding: 25px;
+
+    overflow: hidden;
+
+    border:
+        5px solid rgba(255,255,255,.9);
+
+    border-radius: 35px;
+
+    color: var(--text);
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #eaf8ff
+        );
+
+    box-shadow:
+        0 12px 0 rgba(0,92,150,.25),
+        0 25px 50px rgba(0,0,0,.25);
+
+    animation:
+        victoryCard .7s
+        cubic-bezier(.2,1.5,.4,1);
+}
+
+
+.level-complete::before {
+
+    content:
+        "✦  ⭐  ✦  ⭐  ✦";
+
+    position: absolute;
+
+    top: 15px;
+    left: 0;
+
+    width: 100%;
+
+    color: #ffc400;
+
+    font-size: 25px;
+
+    animation:
+        celebration 1.5s
+        ease-in-out infinite;
+}
+
+
+@keyframes victoryCard {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(50px)
+            scale(.6);
+
+    }
+
+}
+
+
+
+@keyframes celebration {
+
+    50% {
+
+        transform:
+            scale(1.08);
+
+    }
+
+}
+
+
+
+.trophy {
+
+    margin-top: 15px;
+
+    font-size:
+        clamp(75px, 12vw, 110px);
+
+    filter:
+        drop-shadow(
+            0 9px 5px rgba(0,0,0,.20)
+        );
+
+    animation:
+        trophyBounce 1.4s
+        ease-in-out infinite;
+}
+
+
+@keyframes trophyBounce {
+
+    0%,
+    100% {
+
+        transform:
+            translateY(0)
+            rotate(-4deg);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-15px)
+            rotate(4deg);
+
+    }
+
+}
+
+
+
+.level-complete h2 {
+
+    margin: 5px;
+
+    color: #146ac5;
+
+    font-size:
+        clamp(27px, 5vw, 38px);
+
+    font-weight: 800;
+}
+
+
+
+.level-stars {
+
+    margin: 10px;
+
+    font-size:
+        clamp(42px, 8vw, 65px);
+
+    filter:
+        drop-shadow(
+            0 5px 3px rgba(0,0,0,.18)
+        );
+
+    animation:
+        starsVictory 1s
+        ease-in-out infinite alternate;
+}
+
+
+@keyframes starsVictory {
+
+    to {
+        transform: scale(1.08);
+    }
+
+}
+
+
+
+.level-complete p {
+
+    margin: 10px;
+
+    font-size: 23px;
+
+    font-weight: 700;
+}
+
+
+
+.hidden {
+    display: none !important;
+}
+
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (min-width: 700px) {
+
+    #home {
+        padding-top: 4vh;
+    }
+
+    .worlds {
+        gap: 25px;
+    }
+
+}
+
+
+
+/* ==========================================================
+   CELULAR / TABLET PEQUENO
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .screen {
+        padding: 18px;
+    }
+
+
+    #home h1 {
+        letter-spacing: 2px;
+    }
+
+
+    .welcome {
+        margin: 20px auto;
+    }
+
+
+    .world {
+
+        width: min(320px, 90%);
+        min-height: 210px;
+
+    }
+
+
+    .world span {
+        font-size: 60px;
+    }
+
+
+    .battle-header {
+        padding: 8px;
+    }
+
+
+    .score-display,
+    .coin-display {
+
+        min-width: auto;
+
+        font-size: 20px;
+
+    }
+
+
+    .level-info {
+
+        font-size: 17px;
+
+    }
+
+
+    .question {
+
+        min-width: 230px;
+
+        padding:
+            10px 30px;
+
+    }
+
+
+    .answers {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        width: 100%;
+
+    }
+
+
+    .answer {
+
+        min-height: 68px;
+
+    }
+
+}
+
+/* ==========================================================
+   MAPA PREMIUM DAS FASES
+   ========================================================== */
+
+#levels {
+
+    position: relative;
+
+    overflow-x: hidden;
+
+    color: white;
+
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(255,255,255,.20),
+            transparent 22%
+        ),
+        linear-gradient(
+            180deg,
+            #54d6ff 0%,
+            #50cc72 35%,
+            #20a84e 100%
+        );
+}
+
+
+/* MONTANHAS AO FUNDO */
+
+#levels::before {
+
+    content: "⛰️        🌲       ⛰️       🌲";
+
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+
+    font-size: 80px;
+
+    opacity: .25;
+
+    pointer-events: none;
+}
+
+
+.levels-top {
+
+    position: relative;
+
+    z-index: 5;
+
+    display: grid;
+
+    grid-template-columns:
+        70px 1fr 100px;
+
+    align-items: center;
+
+    width: min(850px, 100%);
+
+    margin: auto;
+
+    padding: 12px 20px;
+
+    border:
+        2px solid rgba(255,255,255,.25);
+
+    border-radius: 25px;
+
+    background:
+        rgba(0,80,80,.18);
+
+    backdrop-filter: blur(10px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.15);
+}
+
+
+.levels-top h1 {
+
+    margin: 0;
+
+    font-size:
+        clamp(25px, 5vw, 40px);
+
+    text-shadow:
+        0 4px 4px rgba(0,0,0,.25);
+}
+
+
+.levels-top p {
+
+    margin: 0;
+
+    font-size: 17px;
+}
+
+
+.back-button {
+
+    border: none;
+
+    border-radius: 15px;
+
+    padding: 10px;
+
+    background: white;
+
+    box-shadow:
+        0 5px 0 rgba(0,0,0,.18);
+
+    font-size: 21px;
+}
+
+
+.level-coins {
+
+    padding: 8px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    font-size: 22px;
+
+    font-weight: 800;
+}
+
+
+
+/* ==========================================================
+   CAMINHO
+   ========================================================== */
+
+.level-path {
+
+    position: relative;
+
+    width: min(650px, 100%);
+
+    margin: 30px auto 100px;
+
+    padding:
+        20px 30px 50px;
+}
+
+
+/* LINHA CENTRAL */
+
+.path-line {
+
+    position: absolute;
+
+    top: 50px;
+    bottom: 120px;
+
+    left: 50%;
+
+    width: 15px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 30px;
+
+    background:
+        repeating-linear-gradient(
+            180deg,
+            #ffe66a 0px,
+            #ffe66a 22px,
+            #e6ae27 22px,
+            #e6ae27 38px
+        );
+
+    box-shadow:
+        0 0 0 5px rgba(255,255,255,.15),
+        0 8px 15px rgba(0,0,0,.18);
+}
+
+
+
+/* ==========================================================
+   LINHAS DAS FASES
+   ========================================================== */
+
+.level-row {
+
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 135px;
+}
+
+
+.level-row.left {
+
+    justify-content:
+        flex-start;
+}
+
+
+.level-row.right {
+
+    justify-content:
+        flex-end;
+}
+
+
+
+/* ==========================================================
+   BOTÃO DA FASE
+   ========================================================== */
+
+.level-node {
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 105px;
+    height: 105px;
+
+    border:
+        5px solid white;
+
+    border-radius: 50%;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            180deg,
+            #63e879,
+            #1cab43
+        );
+
+    box-shadow:
+        0 9px 0 #087d2a,
+        0 15px 25px rgba(0,0,0,.25);
+
+    transition:
+        transform .2s
+        cubic-bezier(.2,.8,.3,1.4),
+        filter .2s;
+
+    animation:
+        levelAppear .5s backwards;
+}
+
+
+.level-row:nth-child(2)
+.level-node {
+    animation-delay: .05s;
+}
+
+.level-row:nth-child(3)
+.level-node {
+    animation-delay: .10s;
+}
+
+.level-row:nth-child(4)
+.level-node {
+    animation-delay: .15s;
+}
+
+.level-row:nth-child(5)
+.level-node {
+    animation-delay: .20s;
+}
+
+.level-row:nth-child(6)
+.level-node {
+    animation-delay: .25s;
+}
+
+
+@keyframes levelAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            scale(.3)
+            translateY(30px);
+
+    }
+
+}
+
+
+
+.level-node:not(.locked-level):hover {
+
+    transform:
+        translateY(-8px)
+        scale(1.1);
+
+    filter: brightness(1.08);
+}
+
+
+.level-node:not(.locked-level):active {
+
+    transform:
+        translateY(5px)
+        scale(.97);
+
+    box-shadow:
+        0 3px 0 #087d2a;
+}
+
+
+.level-number {
+
+    font-size: 35px;
+
+    line-height: 1;
+
+    font-weight: 800;
+
+    text-shadow:
+        0 3px 2px rgba(0,0,0,.25);
+}
+
+
+.node-stars {
+
+    position: absolute;
+
+    bottom: -30px;
+
+    white-space: nowrap;
+
+    font-size: 20px;
+
+    filter:
+        drop-shadow(
+            0 3px 2px rgba(0,0,0,.3)
+        );
+}
+
+
+
+/* ==========================================================
+   FASE ATUAL
+   ========================================================== */
+
+.level-node:not(.locked-level) {
+
+    animation:
+        currentLevelPulse 2s
+        ease-in-out infinite;
+}
+
+
+@keyframes currentLevelPulse {
+
+    0%,
+    100% {
+
+        box-shadow:
+            0 9px 0 #087d2a,
+            0 15px 25px rgba(0,0,0,.25),
+            0 0 0 0 rgba(255,232,70,.5);
+
+    }
+
+    50% {
+
+        box-shadow:
+            0 9px 0 #087d2a,
+            0 15px 25px rgba(0,0,0,.25),
+            0 0 0 15px rgba(255,232,70,0);
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   FASE BLOQUEADA
+   ========================================================== */
+
+.locked-level {
+
+    cursor: not-allowed;
+
+    color: #788997;
+
+    border-color: #e7eef2;
+
+    background:
+        linear-gradient(
+            180deg,
+            #d7e0e5,
+            #aebbc3
+        );
+
+    box-shadow:
+        0 8px 0 #77868f,
+        0 14px 20px rgba(0,0,0,.20);
+
+    filter: grayscale(.5);
+}
+
+
+.locked-shake {
+
+    animation:
+        lockedShake .4s ease !important;
+}
+
+
+@keyframes lockedShake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-7px);
+    }
+
+}
+
+
+
+/* ==========================================================
+   BAÚ DA FASE 5
+   ========================================================== */
+
+.level-chest {
+
+    position: absolute;
+
+    left: 125px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    font-size: 45px;
+
+    filter:
+        drop-shadow(
+            0 7px 4px rgba(0,0,0,.25)
+        );
+
+    animation:
+        chestFloat 1.8s
+        ease-in-out infinite;
+}
+
+
+.level-chest small {
+
+    padding: 2px 7px;
+
+    border-radius: 10px;
+
+    color: #664200;
+
+    background: #ffd83d;
+
+    font-size: 12px;
+
+    font-weight: 800;
+}
+
+
+@keyframes chestFloat {
+
+    50% {
+
+        transform:
+            translateY(-10px)
+            rotate(4deg);
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   CHEFE FINAL
+   ========================================================== */
+
+.boss-row {
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    margin-top: 30px;
+}
+
+
+.boss-label {
+
+    margin-bottom: 18px;
+
+    padding: 7px 18px;
+
+    border-radius: 20px;
+
+    color: #6d2100;
+
+    background:
+        linear-gradient(
+            #ffe267,
+            #ffb52c
+        );
+
+    box-shadow:
+        0 5px 0 #c37c12;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    animation:
+        bossLabel 1.5s
+        ease-in-out infinite;
+}
+
+
+@keyframes bossLabel {
+
+    50% {
+        transform: scale(1.06);
+    }
+
+}
+
+
+.boss-level {
+
+    width: 135px;
+    height: 135px;
+
+    border-color: #ffe568;
+
+    background:
+        linear-gradient(
+            #9a59ff,
+            #6030b8
+        );
+
+    box-shadow:
+        0 10px 0 #401b82,
+        0 18px 30px rgba(0,0,0,.30);
+}
+
+
+.boss-icon {
+
+    position: absolute;
+
+    top: -48px;
+
+    font-size: 55px;
+
+    filter:
+        drop-shadow(
+            0 6px 3px rgba(0,0,0,.3)
+        );
+
+    animation:
+        bossFloat 1.5s
+        ease-in-out infinite;
+}
+
+
+@keyframes bossFloat {
+
+    50% {
+
+        transform:
+            translateY(-8px)
+            rotate(5deg);
+
+    }
+
+}
+
+
+
+/* ==========================================================
+   TABLET / CELULAR
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .levels-top {
+
+        grid-template-columns:
+            50px 1fr 65px;
+
+        padding:
+            10px 8px;
+
+    }
+
+
+    .levels-top p {
+        display: none;
+    }
+
+
+    .level-coins {
+        font-size: 17px;
+    }
+
+
+    .level-path {
+
+        padding-left: 15px;
+        padding-right: 15px;
+
+    }
+
+
+    .level-node {
+
+        width: 90px;
+        height: 90px;
+
+    }
+
+
+    .level-number {
+        font-size: 30px;
+    }
+
+
+    .level-chest {
+        left: 100px;
+    }
+
+}
+/* ==========================================================
+   PARTE 4 — ARENA PREMIUM
+   ========================================================== */
+
+.battle-stage {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    width: min(680px, 96%);
+    height: 190px;
+
+    margin: 5px auto 10px;
+    padding: 10px 35px;
+
+    border-radius: 35px;
+
+    background:
+        radial-gradient(
+            ellipse at bottom,
+            rgba(255,255,255,.20),
+            transparent 60%
+        );
+
+    perspective: 800px;
+}
+
+
+/* PERSONAGENS */
+
+.fighter {
+    position: relative;
+    z-index: 3;
+
+    width: 150px;
+
+    text-align: center;
+}
+
+
+.fighter-name {
+    display: inline-block;
+
+    padding: 3px 12px;
+    margin-bottom: 4px;
+
+    border-radius: 12px;
+
+    color: white;
+    background: rgba(0,0,0,.28);
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+.player-character {
+    position: relative;
+
+    font-size: 90px;
+
+    filter:
+        drop-shadow(
+            0 10px 4px
+            rgba(0,0,0,.30)
+        );
+
+    transform-origin:
+        bottom center;
+
+    animation:
+        playerIdle 2s
+        ease-in-out infinite;
+}
+
+
+@keyframes playerIdle {
+
+    50% {
+        transform:
+            translateY(-7px)
+            rotate(-3deg);
+    }
+
+}
+
+
+.monster {
+    margin: 0;
+
+    font-size: 90px;
+
+    transform-origin:
+        bottom center;
+}
+
+
+/* SOMBRAS */
+
+.player-shadow,
+.enemy-shadow {
+    width: 90px;
+    height: 15px;
+
+    margin: -8px auto 0;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,0,0,.20);
+
+    filter: blur(2px);
+}
+
+
+/* ==========================================================
+   VIDA DO MONSTRO
+   ========================================================== */
+
+.enemy-health {
+    width: 140px;
+    height: 15px;
+
+    margin: 3px auto;
+
+    padding: 2px;
+
+    overflow: hidden;
+
+    border: 2px solid white;
+    border-radius: 20px;
+
+    background:
+        rgba(0,0,0,.30);
+}
+
+
+.enemy-health-bar {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3030,
+            #ff6b40
+        );
+
+    transition:
+        width .45s ease;
+
+    box-shadow:
+        0 0 10px
+        rgba(255,60,40,.7);
+}
+
+
+.health-text {
+    color: white;
+
+    font-size: 12px;
+    font-weight: 800;
+
+    text-shadow:
+        0 2px 2px
+        rgba(0,0,0,.4);
+}
+
+
+/* ==========================================================
+   COMBO
+   ========================================================== */
+
+.combo-display {
+    position: absolute;
+
+    top: -20px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    white-space: nowrap;
+
+    padding: 5px 12px;
+
+    border-radius: 15px;
+
+    color: #713500;
+
+    background:
+        linear-gradient(
+            #fff16a,
+            #ffb900
+        );
+
+    box-shadow:
+        0 5px 0 #c67d00,
+        0 8px 15px
+        rgba(0,0,0,.20);
+
+    font-size: 17px;
+    font-weight: 800;
+
+    animation:
+        comboPulse .7s
+        ease-in-out infinite alternate;
+}
+
+
+@keyframes comboPulse {
+
+    to {
+        transform:
+            translateX(-50%)
+            scale(1.12);
+    }
+
+}
+
+
+/* ==========================================================
+   ATAQUE DO KALEBE
+   ========================================================== */
+
+.player-attacking {
+    animation:
+        playerAttack .55s ease !important;
+}
+
+
+@keyframes playerAttack {
+
+    0% {
+        transform:
+            translateX(0);
+    }
+
+    40% {
+        transform:
+            translateX(65px)
+            scale(1.12);
+    }
+
+    100% {
+        transform:
+            translateX(0);
+    }
+
+}
+
+
+/* ==========================================================
+   MONSTRO TOMANDO DANO
+   ========================================================== */
+
+.monster-hit {
+    animation:
+        monsterDamage .5s ease !important;
+}
+
+
+@keyframes monsterDamage {
+
+    20% {
+        transform:
+            translateX(15px)
+            rotate(10deg);
+
+        filter:
+            brightness(2);
+    }
+
+    40% {
+        transform:
+            translateX(-12px)
+            rotate(-8deg);
+    }
+
+    60% {
+        transform:
+            translateX(8px);
+    }
+
+}
+
+
+/* ==========================================================
+   ATAQUE DO MONSTRO
+   ========================================================== */
+
+.enemy-attacking {
+    animation:
+        enemyAttackMove .55s
+        ease !important;
+}
+
+
+@keyframes enemyAttackMove {
+
+    40% {
+        transform:
+            translateX(-60px)
+            scale(1.15);
+    }
+
+}
+
+
+/* ==========================================================
+   KALEBE TOMANDO DANO
+   ========================================================== */
+
+.player-hit {
+    animation:
+        playerDamage .5s
+        ease !important;
+}
+
+
+@keyframes playerDamage {
+
+    20% {
+        transform:
+            translateX(-12px)
+            rotate(-8deg);
+    }
+
+    40% {
+        transform:
+            translateX(12px)
+            rotate(8deg);
+    }
+
+    60% {
+        transform:
+            translateX(-7px);
+    }
+
+}
+
+
+/* ==========================================================
+   PROJÉTEIS
+   ========================================================== */
+
+.attack-zone {
+    position: absolute;
+
+    left: 25%;
+    right: 25%;
+    bottom: 65px;
+
+    height: 70px;
+
+    pointer-events: none;
+}
+
+
+.battle-projectile {
+    position: absolute;
+
+    top: 15px;
+
+    z-index: 10;
+
+    font-size: 42px;
+
+    filter:
+        drop-shadow(
+            0 4px 5px
+            rgba(0,0,0,.30)
+        );
+}
+
+
+.player-attack {
+    left: 0;
+
+    animation:
+        projectileRight .55s
+        ease-in forwards;
+}
+
+
+@keyframes projectileRight {
+
+    from {
+        left: 0;
+        transform:
+            scale(.5)
+            rotate(0);
+    }
+
+    to {
+        left: 90%;
+        transform:
+            scale(1.4)
+            rotate(360deg);
+    }
+
+}
+
+
+.enemy-attack {
+    right: 0;
+
+    animation:
+        projectileLeft .55s
+        ease-in forwards;
+}
+
+
+@keyframes projectileLeft {
+
+    from {
+        right: 0;
+        transform:
+            scale(.5);
+    }
+
+    to {
+        right: 90%;
+        transform:
+            scale(1.4);
+    }
+
+}
+
+
+/* ==========================================================
+   TABLET PEQUENO
+   ========================================================== */
+
+@media (max-width: 600px) {
+
+    .battle-stage {
+        height: 165px;
+        padding:
+            10px 5px;
+    }
+
+    .fighter {
+        width: 120px;
+    }
+
+    .player-character,
+    .monster {
+        font-size: 70px;
+    }
+
+    .enemy-health {
+        width: 110px;
+    }
+
+}
+/* ==========================================================
+   ACESSIBILIDADE
+   Reduz animações caso o dispositivo solicite.
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            .01ms !important;
+
+    }
+
+}
+/* ==========================================================
+   PERSONAGEM PERSONALIZADO DO KALEBE
+   ========================================================== */
+
+.kalebe-character {
+    width: 130px;
+    height: 130px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 0 auto;
+
+    filter:
+        drop-shadow(
+            0 10px 5px
+            rgba(0, 0, 0, .28)
+        );
+}
+.sound-button {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 1000;
+
+    width: 52px;
+    height: 52px;
+
+    border: 3px solid rgba(255, 255, 255, .8);
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #dff5ff
+        );
+
+    font-size: 25px;
+    cursor: pointer;
+
+    box-shadow:
+        0 6px 15px
+        rgba(0, 0, 0, .20);
+
+    transition:
+        transform .2s ease;
+}
+
+.sound-button:hover {
+    transform: scale(1.08);
+}
+
+.sound-button:active {
+    transform: scale(.92);
+}

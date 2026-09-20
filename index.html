@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <!-- ========================================= -->
+    <!-- CORES DO APP -->
+    <!-- ========================================= -->
+
+    <meta
+        name="theme-color"
+        content="#1769e0"
+    >
+
+    <!-- ========================================= -->
+    <!-- INFORMAÇÕES DO APP -->
+    <!-- ========================================= -->
+
+    <meta
+        name="description"
+        content="Kalebe - Aventura da Multiplicação"
+    >
+
+    <meta
+        name="application-name"
+        content="Kalebe"
+    >
+
+    <title>
+        Kalebe - Aventura da Multiplicação
+    </title>
+
+
+    <!-- ========================================= -->
+    <!-- FAVICON -->
+    <!-- ========================================= -->
+
+    <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="./imagens/favicon.png"
+    >
+
+    <link
+        rel="shortcut icon"
+        href="./imagens/favicon.png"
+        type="image/png"
+    >
+
+
+    <!-- ========================================= -->
+    <!-- ÍCONE PARA CELULAR / TABLET -->
+    <!-- ========================================= -->
+
+    <link
+        rel="apple-touch-icon"
+        sizes="192x192"
+        href="./imagens/icon-192.png"
+    >
+
+
+    <!-- ========================================= -->
+    <!-- PWA -->
+    <!-- ========================================= -->
+
+    <link
+        rel="manifest"
+        href="./manifest.json"
+    >
+
+
+    <!-- ========================================= -->
+    <!-- CSS -->
+    <!-- ========================================= -->
+
+    <link
+        rel="stylesheet"
+        href="./style.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="game">
+
+        <!-- ========================================= -->
+        <!-- TELA INICIAL -->
+        <!-- ========================================= -->
+
+        <section id="home" class="screen active">
+
+            <div class="logo">⭐</div>
+
+            <h1>KALEBE</h1>
+
+            <h2>Aventura da Multiplicação</h2>
+
+            <p class="welcome">
+                Olá, Kalebe! 👋
+                <br>
+                Preparado para a aventura?
+            </p>
+             <button
+    id="sound-button"
+    class="sound-button"
+    onclick="toggleSound()"
+    aria-label="Ligar ou desligar som"
+>
+    🔊
+</button>
+            <button
+                class="main-button"
+                onclick="startGame()"
+            >
+                🎮 JOGAR
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="showScreen('map')"
+            >
+                🗺️ MUNDOS
+            </button>
+
+            <button
+                class="secondary-button"
+                onclick="alert('🏆 Em breve teremos a área de conquistas!')"
+            >
+                🏆 CONQUISTAS
+            </button>
+
+        </section>
+
+
+        <!-- ========================================= -->
+        <!-- MAPA DOS MUNDOS -->
+        <!-- ========================================= -->
+
+        <section id="map" class="screen">
+
+            <h1>🗺️ MAPA DA AVENTURA</h1>
+
+            <p class="map-description">
+                Escolha seu próximo desafio!
+            </p>
+
+            <div class="worlds">
+
+                <!-- MUNDO X2 -->
+                <button
+                    id="world-2"
+                    class="world unlocked"
+                    onclick="openWorld(2)"
+                >
+                    <span>🌳</span>
+                    <strong>Floresta</strong>
+                    <small>Multiplicação ×2</small>
+
+                    <div class="world-stars">
+                        ⭐⭐⭐
+                    </div>
+                </button>
+
+
+                <!-- MUNDO X3 -->
+                <button
+                    id="world-3"
+                    class="world unlocked"
+                    onclick="openWorld(3)"
+                >
+                    <span>🏜️</span>
+                    <strong>Deserto</strong>
+                    <small>Multiplicação ×3</small>
+
+                    <div class="world-stars">
+                        ☆☆☆
+                    </div>
+                </button>
+
+
+                <!-- MUNDO X4 -->
+                <button
+                    id="world-4"
+                    class="world locked"
+                    disabled
+                >
+                    <span>🏰</span>
+                    <strong>Castelo</strong>
+                    <small>Multiplicação ×4</small>
+
+                    <div>🔒</div>
+                </button>
+
+
+                <!-- MUNDO X5 -->
+                <button
+                    id="world-5"
+                    class="world locked"
+                    disabled
+                >
+                    <span>🌊</span>
+                    <strong>Oceano</strong>
+                    <small>Multiplicação ×5</small>
+
+                    <div>🔒</div>
+                </button>
+
+
+                <!-- MUNDO X10 -->
+                <button
+                    id="world-10"
+                    class="world locked"
+                    disabled
+                >
+                    <span>🚀</span>
+                    <strong>Espaço</strong>
+                    <small>Multiplicação ×10</small>
+
+                    <div>🔒</div>
+                </button>
+
+            </div>
+
+            <button
+                class="secondary-button"
+                onclick="showScreen('home')"
+            >
+                ⬅️ VOLTAR
+            </button>
+
+        </section>
+
+
+        <!-- ========================================= -->
+        <!-- MAPA DAS FASES DO MUNDO -->
+        <!-- ========================================= -->
+
+        <section id="levels" class="screen">
+
+            <div class="levels-top">
+
+                <button
+                    class="back-button"
+                    onclick="showScreen('map')"
+                    aria-label="Voltar ao mapa dos mundos"
+                >
+                    ⬅️
+                </button>
+
+                <div>
+                    <h1 id="level-world-title">
+                        🌳 FLORESTA DO ×2
+                    </h1>
+
+                    <p id="level-world-description">
+                        Complete as fases e domine a multiplicação!
+                    </p>
+                </div>
+
+                <div class="level-coins">
+                    🪙 <span id="level-coins">0</span>
+                </div>
+
+            </div>
+
+
+            <div class="level-path">
+
+                <div class="path-line"></div>
+
+
+                <!-- FASE 1 -->
+                <div class="level-row left">
+
+                    <button
+                        id="level-button-1"
+                        class="level-node"
+                        onclick="selectLevel(1)"
+                        aria-label="Fase 1"
+                    >
+                        <span class="level-number">1</span>
+
+                        <span
+                            id="stars-level-1"
+                            class="node-stars"
+                        >
+                            ☆☆☆
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 2 -->
+                <div class="level-row right">
+
+                    <button
+                        id="level-button-2"
+                        class="level-node locked-level"
+                        onclick="selectLevel(2)"
+                        aria-label="Fase 2"
+                    >
+                        <span class="level-number">2</span>
+
+                        <span
+                            id="stars-level-2"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 3 -->
+                <div class="level-row left">
+
+                    <button
+                        id="level-button-3"
+                        class="level-node locked-level"
+                        onclick="selectLevel(3)"
+                        aria-label="Fase 3"
+                    >
+                        <span class="level-number">3</span>
+
+                        <span
+                            id="stars-level-3"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 4 -->
+                <div class="level-row right">
+
+                    <button
+                        id="level-button-4"
+                        class="level-node locked-level"
+                        onclick="selectLevel(4)"
+                        aria-label="Fase 4"
+                    >
+                        <span class="level-number">4</span>
+
+                        <span
+                            id="stars-level-4"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 5 -->
+                <div class="level-row left">
+
+                    <button
+                        id="level-button-5"
+                        class="level-node locked-level"
+                        onclick="selectLevel(5)"
+                        aria-label="Fase 5"
+                    >
+                        <span class="level-number">5</span>
+
+                        <span
+                            id="stars-level-5"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                    <div class="level-chest">
+                        🎁
+                        <small>BAÚ</small>
+                    </div>
+
+                </div>
+
+
+                <!-- FASE 6 -->
+                <div class="level-row right">
+
+                    <button
+                        id="level-button-6"
+                        class="level-node locked-level"
+                        onclick="selectLevel(6)"
+                        aria-label="Fase 6"
+                    >
+                        <span class="level-number">6</span>
+
+                        <span
+                            id="stars-level-6"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 7 -->
+                <div class="level-row left">
+
+                    <button
+                        id="level-button-7"
+                        class="level-node locked-level"
+                        onclick="selectLevel(7)"
+                        aria-label="Fase 7"
+                    >
+                        <span class="level-number">7</span>
+
+                        <span
+                            id="stars-level-7"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 8 -->
+                <div class="level-row right">
+
+                    <button
+                        id="level-button-8"
+                        class="level-node locked-level"
+                        onclick="selectLevel(8)"
+                        aria-label="Fase 8"
+                    >
+                        <span class="level-number">8</span>
+
+                        <span
+                            id="stars-level-8"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 9 -->
+                <div class="level-row left">
+
+                    <button
+                        id="level-button-9"
+                        class="level-node locked-level"
+                        onclick="selectLevel(9)"
+                        aria-label="Fase 9"
+                    >
+                        <span class="level-number">9</span>
+
+                        <span
+                            id="stars-level-9"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+
+                <!-- FASE 10 / CHEFE -->
+                <div class="level-row boss-row">
+
+                    <div class="boss-label">
+                        👑 CHEFE FINAL
+                    </div>
+
+                    <button
+                        id="level-button-10"
+                        class="level-node boss-level locked-level"
+                        onclick="selectLevel(10)"
+                        aria-label="Fase 10 - Chefe final"
+                    >
+                        <span class="boss-icon">👹</span>
+
+                        <span class="level-number">10</span>
+
+                        <span
+                            id="stars-level-10"
+                            class="node-stars"
+                        >
+                            🔒
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================= -->
+        <!-- TELA DE BATALHA -->
+        <!-- ========================================= -->
+
+        <section id="battle" class="screen">
+
+            <header class="battle-header">
+
+                <button
+                    class="back-button"
+                    onclick="showScreen('levels')"
+                    aria-label="Voltar ao mapa das fases"
+                >
+                    ⬅️
+                </button>
+
+                <div class="score-display">
+                    ⭐ <span id="score">0</span>
+                </div>
+
+                <div class="coin-display">
+                    🪙 <span id="coins">0</span>
+                </div>
+
+            </header>
+
+
+            <div class="battle-area">
+
+                <!-- INFORMAÇÕES DA FASE -->
+                <div class="level-info">
+
+                    <span>
+                        🌎 Mundo ×<span id="world-number">2</span>
+                    </span>
+
+                    <span>
+                        Fase <span id="level-number">1</span>/10
+                    </span>
+
+                </div>
+
+
+                <!-- BARRA DE PROGRESSO -->
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                </div>
+
+
+                <!-- VIDAS -->
+                <div class="lives">
+                    ❤️ ❤️ ❤️
+                </div>
+
+
+                <!-- MONSTRO -->
+             <!-- ========================================= -->
+<!-- ARENA DE BATALHA -->
+<!-- ========================================= -->
+
+<div class="battle-stage">
+
+    <!-- KALEBE -->
+
+    <div
+        id="player"
+        class="fighter player"
+    >
+
+        <div
+            id="combo-display"
+            class="combo-display hidden"
+        >
+            🔥 COMBO x<span id="combo-number">2</span>
+        </div>
+
+        <div class="fighter-name">
+            KALEBE
+        </div>
+
+        <div
+    id="player-character"
+    class="player-character"
+>
+    <img
+        src="./imagens/kalebe.png"
+        alt="Kalebe"
+        class="kalebe-character"
+    >
+</div>
+
+        <div class="player-shadow"></div>
+
+    </div>
+
+
+    <!-- ÁREA DOS ATAQUES -->
+
+    <div
+        id="attack-zone"
+        class="attack-zone"
+    ></div>
+
+
+    <!-- MONSTRO -->
+
+    <div
+        id="enemy"
+        class="fighter enemy"
+    >
+
+        <div class="fighter-name">
+            MONSTRO
+        </div>
+
+        <div class="enemy-health">
+
+            <div
+                id="enemy-health-bar"
+                class="enemy-health-bar"
+            ></div>
+
+        </div>
+
+        <div
+            id="enemy-health-text"
+            class="health-text"
+        >
+            100 / 100
+        </div>
+
+        <div
+            id="monster"
+            class="monster"
+        >
+            👾
+        </div>
+
+        <div class="enemy-shadow"></div>
+
+    </div>
+
+</div>
+
+
+<p
+    id="battle-message"
+    class="mission"
+>
+    ⚔️ Acerte para atacar o monstro!
+</p>
+
+                <!-- PERGUNTA -->
+                <div
+                    id="question"
+                    class="question"
+                >
+                    2 × 5
+                </div>
+
+
+                <!-- RESPOSTAS -->
+                <div
+                    id="answers"
+                    class="answers"
+                ></div>
+
+
+                <!-- FEEDBACK -->
+                <div
+                    id="feedback"
+                    class="feedback"
+                    aria-live="polite"
+                ></div>
+
+
+                <!-- ================================= -->
+                <!-- FASE CONCLUÍDA -->
+                <!-- ================================= -->
+
+                <div
+                    id="level-complete"
+                    class="level-complete hidden"
+                >
+
+                    <div class="trophy">
+                        🏆
+                    </div>
+
+                    <h2>
+                        FASE CONCLUÍDA!
+                    </h2>
+
+                    <div
+                        id="level-stars"
+                        class="level-stars"
+                    >
+                        ⭐⭐⭐
+                    </div>
+
+                    <p>
+                        Muito bem, Kalebe!
+                    </p>
+
+                    <button
+                        class="main-button"
+                        onclick="nextLevel()"
+                    >
+                        ▶️ PRÓXIMA FASE
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        onclick="updateLevelMap(); showScreen('levels')"
+                    >
+                        🛤️ VOLTAR ÀS FASES
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ========================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================================= -->
+
+    <script src="./app.js"></script>
+
+</body>
+
+</html>
