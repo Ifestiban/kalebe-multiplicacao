@@ -3030,3 +3030,62 @@ button:focus-visible {
 .sound-button:active {
     transform: scale(.92);
 }
+/* ==========================================================
+   MONSTRO DERROTADO
+   ========================================================== */
+
+.monster-defeated {
+
+    animation:
+        monsterDefeat
+        0.8s
+        ease-in
+        forwards;
+
+}
+
+
+@keyframes monsterDefeat {
+
+    0% {
+
+        transform:
+            scale(1)
+            rotate(0deg);
+
+        opacity: 1;
+
+    }
+
+
+    30% {
+
+        transform:
+            scale(1.15)
+            rotate(-10deg);
+
+    }
+
+
+    60% {
+
+        transform:
+            scale(0.9)
+            rotate(10deg);
+
+        opacity: 0.7;
+
+    }
+
+
+    100% {
+
+        transform:
+            translateY(50px)
+            scale(0);
+
+        opacity: 0;
+
+    }
+
+}
