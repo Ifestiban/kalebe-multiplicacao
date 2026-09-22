@@ -25,8 +25,29 @@ let coins =
 
 const QUESTIONS_PER_LEVEL = 10;
 
+
+// ==========================================================
+// ORDEM DOS MUNDOS
+// ==========================================================
+
+const WORLDS = [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+];
+
+
 let questionsAnswered = 0;
+
 let correctAnswers = 0;
+
+let finalRound = false;
 
 let lives = 3;
 
@@ -285,6 +306,67 @@ function startGame() {
     showScreen("map");
 
 }
+// ==========================================================
+// DESBLOQUEAR PRÓXIMO MUNDO
+// ==========================================================
+
+function unlockNextWorld() {
+
+   const currentIndex =
+    WORLDS.indexOf(currentTable);
+
+    if (
+        currentIndex === -1 ||
+        currentIndex >= WORLDS.length - 1
+    ) {
+
+        return;
+
+    }
+
+
+    const nextWorld =
+        WORLDS[currentIndex + 1];
+
+
+    const worldButton =
+        document.getElementById(
+            `world-${nextWorld}`
+        );
+
+
+    if (!worldButton) {
+
+        return;
+
+    }
+
+
+    // REMOVE O BLOQUEIO
+
+    worldButton.classList.remove(
+        "locked"
+    );
+
+    worldButton.classList.add(
+        "unlocked"
+    );
+
+
+    // HABILITA O BOTÃO
+
+    worldButton.disabled = false;
+
+
+    // PERMITE ABRIR O MUNDO
+
+    worldButton.onclick = () => {
+
+        openWorld(nextWorld);
+
+    };
+
+}
 
 // ==========================================================
 // MAPA DOS MUNDOS
@@ -292,13 +374,76 @@ function startGame() {
 
 function updateWorldMap() {
 
-    /*
-        Por enquanto ×2 e ×3 ficam disponíveis
-        para facilitar nossos testes.
+    WORLDS.forEach((world, index) => {
 
-        Depois implementaremos o desbloqueio
-        automático dos mundos.
-    */
+        const button =
+            document.getElementById(
+                `world-${world}`
+            );
+
+        if (!button) {
+            return;
+        }
+
+
+        // ×2 começa sempre liberado.
+        // ×3 continua liberado por enquanto
+        // para nossos testes.
+
+        let unlocked =
+            world === 2 ||
+            world === 3;
+
+
+        // Para os demais mundos,
+        // verifica se o mundo anterior foi concluído.
+
+        if (index > 0) {
+
+            const previousWorld =
+                WORLDS[index - 1];
+
+            const previousCompleted =
+                localStorage.getItem(
+                    `kalebe_world_${previousWorld}_completed`
+                ) === "true";
+
+            if (previousCompleted) {
+
+                unlocked = true;
+
+            }
+
+        }
+
+
+        if (unlocked) {
+
+            button.classList.remove("locked");
+            button.classList.add("unlocked");
+
+            button.disabled = false;
+
+            button.onclick = () => {
+
+                openWorld(world);
+
+            };
+
+        }
+
+        else {
+
+            button.classList.remove("unlocked");
+            button.classList.add("locked");
+
+            button.disabled = true;
+            button.onclick = null;
+
+        }
+
+    });
+
 
     updateHeader();
 
@@ -401,6 +546,52 @@ function getWorldData(table) {
 
         },
 
+        6: {
+
+            icon: "🌋",
+
+            name: "VULCÃO",
+
+            description:
+                "Enfrente o vulcão e domine a multiplicação por 6!"
+
+        },
+
+
+        7: {
+
+            icon: "❄️",
+
+            name: "GELO",
+
+            description:
+                "Atravesse o mundo gelado e domine a multiplicação por 7!"
+
+        },
+
+
+        8: {
+
+            icon: "🦖",
+
+            name: "DINOSSAUROS",
+
+            description:
+                "Explore o mundo dos dinossauros e domine a multiplicação por 8!"
+
+        },
+
+
+        9: {
+
+            icon: "⚡",
+
+            name: "TEMPESTADE",
+
+            description:
+                "Enfrente a tempestade e domine a multiplicação por 9!"
+
+        },
 
         10: {
 
@@ -632,6 +823,8 @@ function startLevel() {
 
     correctAnswers = 0;
 
+    finalRound = false;
+
     lives = 3;
 
     answering = false;
@@ -641,15 +834,28 @@ function startLevel() {
     // REINICIA A BATALHA
     // ------------------------------------------------------
 
-    enemyMaxHealth =
-        currentLevel === 10
-            ? 150
-            : 100;
+enemyMaxHealth = 100;
 
-    enemyHealth = enemyMaxHealth;
+enemyHealth = enemyMaxHealth;
 
-    combo = 0;
-    maxCombo = 0;
+combo = 0;
+maxCombo = 0;
+
+
+    const monster =
+        document.getElementById(
+            "monster"
+        );
+
+
+    if (monster) {
+
+        monster.classList.remove(
+            "monster-defeated"
+        );
+
+    }
+
 
     updateBattleUI();
 
@@ -1017,6 +1223,7 @@ function updateBattleUI() {
 // ==========================================================
 
 function playerAttack() {
+
     playSound("attack");
 
     combo++;
@@ -1029,26 +1236,16 @@ function playerAttack() {
     }
 
 
-    let damage = 10;
+    // ------------------------------------------------------
+// DANO FIXO
+// CADA ACERTO REMOVE 10 HP
+// ------------------------------------------------------
 
+const damage = 10;
 
     // ------------------------------------------------------
-    // COMBO AUMENTA O DANO
+    // DIMINUI A VIDA DO MONSTRO
     // ------------------------------------------------------
-
-    if (combo >= 3) {
-
-        damage = 12;
-
-    }
-
-
-    if (combo >= 5) {
-
-        damage = 15;
-
-    }
-
 
     enemyHealth -= damage;
 
@@ -1097,17 +1294,18 @@ function playerAttack() {
 
     setTimeout(() => {
 
-    playSound("monsterHit");
+        playSound("monsterHit");
 
-    if (monster) {
 
-        monster.classList.add(
-            "monster-hit"
-        );
+        if (monster) {
 
-    }
+            monster.classList.add(
+                "monster-hit"
+            );
 
-}, 180);
+        }
+
+    }, 180);
 
 
     // ------------------------------------------------------
@@ -1137,9 +1335,63 @@ function playerAttack() {
 
 
     updateBattleUI();
-
 }
 
+// ==========================================================
+// MONSTRO DERROTADO
+// ==========================================================
+
+function defeatMonster() {
+
+    // ------------------------------------------------------
+    // GARANTE QUE A VIDA CHEGOU A ZERO
+    // ------------------------------------------------------
+
+    enemyHealth = 0;
+
+    updateBattleUI();
+
+
+    const monster =
+        document.getElementById(
+            "monster"
+        );
+
+
+    if (!monster) {
+
+        return;
+
+    }
+
+
+    // ------------------------------------------------------
+    // ANIMAÇÃO DE DERROTA
+    // ------------------------------------------------------
+
+    monster.classList.add(
+        "monster-defeated"
+    );
+
+
+    // ------------------------------------------------------
+    // MENSAGEM
+    // ------------------------------------------------------
+
+    const feedback =
+        document.getElementById(
+            "feedback"
+        );
+
+
+    if (feedback) {
+
+        feedback.textContent =
+            "🏆 MONSTRO DERROTADO!";
+
+    }
+
+}
 
 // ==========================================================
 // ATAQUE DO MONSTRO
@@ -1317,7 +1569,11 @@ function checkAnswer(
         );
 
 
+   if (!finalRound) {
+
     questionsAnswered++;
+
+}
 
 
     // ======================================================
@@ -1326,7 +1582,11 @@ function checkAnswer(
 
     if (answer === correct) {
 
-        correctAnswers++;
+        if (!finalRound) {
+
+    correctAnswers++;
+
+}
 
 
         score += 10;
@@ -1348,9 +1608,6 @@ playerAttack();
         // --------------------------------------------------
         // KALEBE ATACA
         // --------------------------------------------------
-
-        playerAttack();
-
 
         if (feedback) {
 
@@ -1409,7 +1666,7 @@ playSound("wrong");
     // PRÓXIMA AÇÃO
     // ======================================================
 
-    setTimeout(() => {
+setTimeout(() => {
 
         /*
             Se perdeu todas as vidas,
@@ -1430,17 +1687,39 @@ playSound("wrong");
             finaliza a fase.
         */
 
-        if (
-            questionsAnswered >=
-            QUESTIONS_PER_LEVEL
-        ) {
+      if (
+    questionsAnswered >=
+    QUESTIONS_PER_LEVEL
+) {
+
+    // Se o monstro chegou a 0,
+    // encerra a fase normalmente.
+
+    if (enemyHealth <= 0) {
+
+        defeatMonster();
+
+        setTimeout(() => {
 
             finishLevel();
 
-            return;
+        }, 900);
 
-        }
+        return;
 
+    }
+
+
+    // Se ainda tem vida,
+    // começa a Rodada Final.
+
+    finalRound = true;
+
+    generateQuestion();
+
+    return;
+
+}
 
         /*
             Caso contrário:
@@ -1878,13 +2157,17 @@ playSound("unlock");
 // ==========================================================
 // MUNDO COMPLETO
 // ==========================================================
-
 function worldCompleted() {
 
     localStorage.setItem(
         `kalebe_world_${currentTable}_completed`,
         "true"
     );
+
+
+    // LIBERA O PRÓXIMO MUNDO
+
+    unlockNextWorld();
 
 
     /*
@@ -1910,8 +2193,6 @@ function worldCompleted() {
     );
 
 }
-
-
 // ==========================================================
 // SALVAR PROGRESSO
 // ==========================================================
